@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "floor_id": "lab1_f3_11222",
+  "name": "悖论迷宫: 第3区域 11222",
+  "grid": {
+    "cols": 7,
+    "rows": 5
+  },
+  "nodes": [
+    {
+      "row": 0,
+      "col": 1,
+      "icon_id": "armament_warehouse",
+      "tier": "legendary"
+    },
+    {
+      "row": 0,
+      "col": 2,
+      "icon_id": "giant_armament_warehouse",
+      "tier": "legendary"
+    },
+    {
+      "row": 0,
+      "col": 3,
+      "icon_id": "central_checkpoint_start"
+    },
+    {
+      "row": 0,
+      "col": 4,
+      "icon_id": "relic_excavation_zone"
+    },
+    {
+      "row": 1,
+      "col": 1,
+      "icon_id": "chaotic_radiance_pilgrimage"
+    },
+    {
+      "row": 1,
+      "col": 2,
+      "icon_id": "relic_excavation_zone"
+    },
+    {
+      "row": 1,
+      "col": 3,
+      "icon_id": "central_checkpoint"
+    },
+    {
+      "row": 1,
+      "col": 4,
+      "icon_id": "labyrinth_supply_base",
+      "tier": "ticket"
+    },
+    {
+      "row": 2,
+      "col": 1,
+      "icon_id": "labyrinth_supply_base",
+      "tier": "ticket"
+    },
+    {
+      "row": 2,
+      "col": 2,
+      "icon_id": "chaotic_radiance_pilgrimage"
+    },
+    {
+      "row": 2,
+      "col": 3,
+      "icon_id": "central_checkpoint"
+    },
+    {
+      "row": 2,
+      "col": 4,
+      "icon_id": "chaotic_radiance_pilgrimage"
+    },
+    {
+      "row": 2,
+      "col": 5,
+      "icon_id": "chaotic_radiance_pilgrimage"
+    },
+    {
+      "row": 3,
+      "col": 1,
+      "icon_id": "labyrinth_supply_base",
+      "tier": "key"
+    },
+    {
+      "row": 3,
+      "col": 2,
+      "icon_id": "chaotic_life_pilgrimage"
+    },
+    {
+      "row": 3,
+      "col": 3,
+      "icon_id": "central_checkpoint"
+    },
+    {
+      "row": 3,
+      "col": 4,
+      "icon_id": "relic_excavation_zone"
+    },
+    {
+      "row": 3,
+      "col": 5,
+      "icon_id": "chaotic_radiance_pilgrimage"
+    },
+    {
+      "row": 4,
+      "col": 1,
+      "icon_id": "chaotic_life_pilgrimage"
+    },
+    {
+      "row": 4,
+      "col": 2,
+      "icon_id": "labyrinth_supply_base",
+      "tier": "key"
+    },
+    {
+      "row": 4,
+      "col": 3,
+      "icon_id": "central_checkpoint_last"
+    },
+    {
+      "row": 4,
+      "col": 4,
+      "icon_id": "dual_phenomenon"
+    },
+    {
+      "row": 4,
+      "col": 5,
+      "icon_id": "labyrinth_supply_base",
+      "tier": "key"
+    }
+  ],
+  "edges": [
+    {
+      "from": [
+        0,
+        4
+      ],
+      "to": [
+        1,
+        4
+      ]
+    },
+    {
+      "from": [
+        2,
+        5
+      ],
+      "to": [
+        3,
+        5
+      ]
+    },
+    {
+      "from": [
+        3,
+        1
+      ],
+      "to": [
+        4,
+        1
+      ]
+    }
+  ]
+}

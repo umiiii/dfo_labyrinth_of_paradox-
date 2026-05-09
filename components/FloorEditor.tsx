@@ -148,7 +148,15 @@ export default function FloorEditor({ iconDict }: FloorEditorProps) {
       a.download = `${floor.floor_id}.png`;
       a.click();
       URL.revokeObjectURL(url);
-      setStatus(`已下载 ${floor.floor_id}.png`);
+      const form = new FormData();
+      form.append('floor_id', floor.floor_id);
+      form.append('image', blob, `${floor.floor_id}.png`);
+      const res = await fetch('/api/editor-export/image', {
+        method: 'POST',
+        body: form,
+      });
+      if (!res.ok) throw new Error(await res.text());
+      setStatus(`已下载并保存 ${floor.floor_id}.png`);
     } catch (err) {
       setStatus(`导出失败：${(err as Error).message}`);
     }
@@ -169,7 +177,18 @@ export default function FloorEditor({ iconDict }: FloorEditorProps) {
     a.download = `${floor.floor_id}.json`;
     a.click();
     URL.revokeObjectURL(url);
-    setStatus(`已下载 ${floor.floor_id}.json`);
+    fetch('/api/editor-export/json', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(floor),
+    })
+      .then(async (res) => {
+        if (!res.ok) throw new Error(await res.text());
+        setStatus(`已下载并保存 ${floor.floor_id}.json`);
+      })
+      .catch((err) => {
+        setStatus(`保存失败：${(err as Error).message}`);
+      });
   };
 
   const handleLoadFile = (e: ChangeEvent<HTMLInputElement>) => {
