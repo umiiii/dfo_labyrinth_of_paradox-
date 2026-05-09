@@ -29,8 +29,15 @@ export default function GuideShell({ sectionName, groups }: Props) {
   const current = groups.find((g) => g.number === selected) ?? groups[0];
 
   return (
-    <main className="wood-bg w-screen h-screen flex overflow-hidden text-amber-100">
-      <aside className="w-72 h-full overflow-y-auto bg-stone-950/80 border-r border-amber-900/40 flex flex-col">
+    <div className="wood-bg w-screen h-screen overflow-hidden flex items-center justify-center text-amber-100">
+      <main
+        className="flex overflow-hidden border border-amber-700/40 shadow-2xl rounded"
+        style={{
+          width: 'max(800px, 60vw)',
+          height: 'max(600px, 60vh)',
+        }}
+      >
+        <aside className="w-72 h-full overflow-y-auto bg-stone-950/80 border-r border-amber-900/40 flex flex-col">
         <div className="px-4 pt-6 pb-4 text-4xl font-semibold text-amber-200 border-l-[3px] border-amber-500 ml-3">
           {sectionName}
         </div>
@@ -148,9 +155,10 @@ export default function GuideShell({ sectionName, groups }: Props) {
           ) : (
             <div className="text-stone-400">该区域暂无迷宫</div>
           )}
-        </div>
-      </section>
-    </main>
+          </div>
+        </section>
+      </main>
+    </div>
   );
 }
 

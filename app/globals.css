@@ -43,6 +43,23 @@ html, body {
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
 }
 
+/* 16:9 frame; rotates 90° on portrait viewports so phones held vertically
+   still see the labyrinth landscape-style. */
+.labyrinth-frame {
+  width: min(100vw, calc(100vh * 16 / 9));
+  height: min(100vh, calc(100vw * 9 / 16));
+  aspect-ratio: 16 / 9;
+}
+
+@media (orientation: portrait) {
+  .labyrinth-frame {
+    width: min(100vh, calc(100vw * 16 / 9));
+    height: min(100vw, calc(100vh * 9 / 16));
+    transform: rotate(90deg);
+    transform-origin: center center;
+  }
+}
+
 /* Title text styling */
 .title-text {
   display: inline-block;

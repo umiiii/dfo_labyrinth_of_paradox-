@@ -28,11 +28,8 @@ export default async function LabyrinthPage({ params }: Params) {
   return (
     <main className="wood-bg w-screen h-screen flex items-center justify-center overflow-hidden">
       <div
-        className="relative shadow-2xl"
+        className="relative shadow-2xl labyrinth-frame"
         style={{
-          width: 'min(100vw, calc(100vh * 16 / 9))',
-          height: 'min(100vh, calc(100vw * 9 / 16))',
-          aspectRatio: '16 / 9',
           background: '#1a0e06',
           border: '1px solid rgba(120,80,40,0.5)',
         }}

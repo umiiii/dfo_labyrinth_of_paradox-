@@ -49,8 +49,7 @@ export default function LabyrinthBoard({
     const el = boardRef.current;
     if (!el) return;
     const update = () => {
-      const rect = el.getBoundingClientRect();
-      setSize({ w: rect.width, h: rect.height });
+      setSize({ w: el.offsetWidth, h: el.offsetHeight });
     };
     update();
     const ro = new ResizeObserver(update);
@@ -74,6 +73,7 @@ export default function LabyrinthBoard({
         backgroundSize: '100% 100%',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
+        containerType: 'size',
       }}
     >
       <svg
@@ -116,16 +116,11 @@ export default function LabyrinthBoard({
                 left: `${xPct(n.col)}%`,
                 top: `${yPct(n.row)}%`,
                 transform: 'translate(-50%, -50%)',
-                width: 'clamp(60px, 14.25%, 117px)',
+                width: 'min(114px, 14.25cqw, 17cqh)',
                 aspectRatio: '1 / 1',
               }}
             >
-              <MazeNode
-                node={n}
-                iconDef={def}
-                resolved={resolved}
-                size={96}
-              />
+              <MazeNode node={n} iconDef={def} resolved={resolved} />
             </div>
           );
         })}

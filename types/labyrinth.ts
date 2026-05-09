@@ -19,11 +19,18 @@ export interface Floor {
   edges: FloorEdge[];
 }
 
+export interface RewardItem {
+  image: string;
+  count?: number;
+  label?: string;
+}
+
 export interface IconDef {
   id: string;
   name: string;
   description: string;
   icon: Record<string, string>;
+  rewards?: RewardItem[];
 }
 
 export type IconDict = Record<string, IconDef>;
