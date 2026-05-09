@@ -31,13 +31,9 @@ export default function GuideShell({ sectionName, groups }: Props) {
   return (
     <div className="wood-bg w-screen h-screen overflow-hidden flex items-center justify-center text-amber-100">
       <main
-        className="flex overflow-hidden border border-amber-700/40 shadow-2xl rounded"
-        style={{
-          width: 'max(800px, 60vw)',
-          height: 'max(600px, 60vh)',
-        }}
+        className="flex flex-col md:flex-row overflow-hidden border border-amber-700/40 shadow-2xl md:rounded w-full h-full md:w-[max(800px,60vw)] md:h-[max(600px,60vh)]"
       >
-        <aside className="w-72 h-full overflow-y-auto bg-stone-950/80 border-r border-amber-900/40 flex flex-col">
+        <aside className="w-full md:w-72 shrink-0 max-h-[55%] md:max-h-none md:h-full overflow-y-auto bg-stone-950/80 border-b md:border-b-0 md:border-r border-amber-900/40 flex flex-col">
         <div className="px-4 pt-6 pb-4 text-4xl font-semibold text-amber-200 border-l-[3px] border-amber-500 ml-3">
           {sectionName}
         </div>
@@ -99,8 +95,8 @@ export default function GuideShell({ sectionName, groups }: Props) {
         </div>
       </aside>
 
-      <section className="flex-1 h-full flex flex-col overflow-hidden">
-        <header className="px-8 pt-6 pb-4 border-b border-stone-800 bg-gradient-to-b from-stone-950/80 to-transparent">
+      <section className="flex-1 min-h-0 h-full flex flex-col overflow-hidden">
+        <header className="px-4 md:px-8 pt-4 md:pt-6 pb-4 border-b border-stone-800 bg-gradient-to-b from-stone-950/80 to-transparent">
           <div className="flex items-baseline gap-4">
             <h1 className="title-text text-3xl">{current?.label ?? ''}</h1>
             <span className="text-xs text-stone-400 tracking-widest">
@@ -114,7 +110,7 @@ export default function GuideShell({ sectionName, groups }: Props) {
           </p>
         </header>
 
-        <div className="flex-1 overflow-y-auto px-8 py-6">
+        <div className="flex-1 overflow-y-auto px-4 md:px-8 py-4 md:py-6">
           {current && current.floors.length > 0 ? (
             <div className="border border-stone-700 rounded overflow-hidden bg-stone-950/40">
               <table className="w-full text-sm">
