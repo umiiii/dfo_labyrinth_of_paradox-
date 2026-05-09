@@ -138,10 +138,20 @@
       "row": 4,
       "col": 5,
       "icon_id": "giant_armament_warehouse",
-      "tier": "legendary"
+      "tier": "epic"
     }
   ],
   "edges": [
+    {
+      "from": [
+        1,
+        2
+      ],
+      "to": [
+        2,
+        2
+      ]
+    },
     {
       "from": [
         2,

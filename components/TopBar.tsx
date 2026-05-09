@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 interface TopBarProps {
   level: number;
   title: string;
@@ -15,11 +17,26 @@ export default function TopBar({ title }: TopBarProps) {
         boxShadow: '0 2px 8px rgba(0,0,0,0.6)',
       }}
     >
-      {/* Center-left: title */}
+      <Link
+        href="/"
+        className="absolute flex items-center gap-1 text-amber-300 hover:text-amber-100 transition"
+        style={{
+          left: 16,
+          top: '50%',
+          transform: 'translateY(-50%)',
+          fontSize: 14,
+        }}
+      >
+        <span aria-hidden style={{ fontSize: 18, lineHeight: 1 }}>
+          ←
+        </span>
+        <span>返回导航</span>
+      </Link>
+
       <div
         className="title-text absolute"
         style={{
-          left: 100,
+          left: 140,
           top: '50%',
           transform: 'translateY(-50%)',
           fontSize: 38,

@@ -114,13 +114,13 @@
     },
     {
       "row": 4,
-      "col": 0,
+      "col": 1,
       "icon_id": "tuner_left_trace",
       "tier": "unique"
     },
     {
       "row": 4,
-      "col": 1,
+      "col": 2,
       "icon_id": "labyrinth_supply_base",
       "tier": "ticket"
     },

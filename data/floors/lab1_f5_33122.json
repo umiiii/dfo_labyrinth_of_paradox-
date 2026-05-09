@@ -37,7 +37,7 @@
     },
     {
       "row": 1,
-      "col": 1,
+      "col": 2,
       "icon_id": "deviated_thousand_seas_sky"
     },
     {
@@ -130,6 +130,16 @@
       "row": 4,
       "col": 3,
       "icon_id": "central_checkpoint_last"
+    },
+    {
+      "row": 4,
+      "col": 4,
+      "icon_id": "chaotic_radiance_pilgrimage"
+    },
+    {
+      "row": 4,
+      "col": 5,
+      "icon_id": "relic_excavation_zone"
     }
   ],
   "edges": [
@@ -141,6 +151,26 @@
       "to": [
         1,
         5
+      ]
+    },
+    {
+      "from": [
+        0,
+        6
+      ],
+      "to": [
+        1,
+        6
+      ]
+    },
+    {
+      "from": [
+        3,
+        1
+      ],
+      "to": [
+        4,
+        1
       ]
     }
   ]

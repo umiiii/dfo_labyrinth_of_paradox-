@@ -111,6 +111,11 @@
       "icon_id": "chaotic_radiance_pilgrimage"
     },
     {
+      "row": 3,
+      "col": 5,
+      "icon_id": "chaotic_radiance_pilgrimage"
+    },
+    {
       "row": 4,
       "col": 1,
       "icon_id": "chaotic_radiance_pilgrimage"
@@ -146,6 +151,16 @@
       "to": [
         1,
         1
+      ]
+    },
+    {
+      "from": [
+        1,
+        4
+      ],
+      "to": [
+        2,
+        4
       ]
     }
   ]

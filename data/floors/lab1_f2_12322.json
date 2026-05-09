@@ -91,13 +91,12 @@
     {
       "row": 3,
       "col": 1,
-      "icon_id": "chaotic_radiance_pilgrimage"
+      "icon_id": "relic_excavation_zone"
     },
     {
       "row": 3,
       "col": 2,
-      "icon_id": "tuner_left_trace",
-      "tier": "unique"
+      "icon_id": "chaotic_radiance_pilgrimage"
     },
     {
       "row": 3,
@@ -112,13 +111,7 @@
     {
       "row": 3,
       "col": 5,
-      "icon_id": "relic_excavation_zone"
-    },
-    {
-      "row": 3,
-      "col": 6,
-      "icon_id": "labyrinth_supply_base",
-      "tier": "key"
+      "icon_id": "chaotic_radiance_pilgrimage"
     },
     {
       "row": 4,

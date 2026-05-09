@@ -111,13 +111,7 @@
     {
       "row": 3,
       "col": 5,
-      "icon_id": "relic_excavation_zone"
-    },
-    {
-      "row": 3,
-      "col": 6,
-      "icon_id": "labyrinth_supply_base",
-      "tier": "key"
+      "icon_id": "chaotic_life_pilgrimage"
     },
     {
       "row": 4,
@@ -161,11 +155,11 @@
     {
       "from": [
         3,
-        2
+        1
       ],
       "to": [
         4,
-        2
+        1
       ]
     }
   ]

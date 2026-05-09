@@ -91,13 +91,13 @@
     {
       "row": 3,
       "col": 1,
-      "icon_id": "chaotic_radiance_pilgrimage"
+      "icon_id": "giant_armament_warehouse",
+      "tier": "primeval"
     },
     {
       "row": 3,
       "col": 2,
-      "icon_id": "labyrinth_supply_base",
-      "tier": "key"
+      "icon_id": "chaotic_radiance_pilgrimage"
     },
     {
       "row": 3,
@@ -107,23 +107,23 @@
     {
       "row": 3,
       "col": 4,
-      "icon_id": "tuner_trace",
-      "tier": "legendary"
+      "icon_id": "chaotic_life_pilgrimage"
     },
     {
       "row": 3,
       "col": 5,
-      "icon_id": "chaotic_radiance_pilgrimage"
+      "icon_id": "relic_excavation_zone"
     },
     {
       "row": 4,
       "col": 1,
-      "icon_id": "chaotic_life_pilgrimage"
+      "icon_id": "chaotic_radiance_pilgrimage"
     },
     {
       "row": 4,
       "col": 2,
-      "icon_id": "chaotic_radiance_pilgrimage"
+      "icon_id": "armament_warehouse",
+      "tier": "epic"
     },
     {
       "row": 4,
@@ -133,8 +133,7 @@
     {
       "row": 4,
       "col": 4,
-      "icon_id": "labyrinth_supply_base",
-      "tier": "key"
+      "icon_id": "relic_excavation_zone"
     },
     {
       "row": 4,
@@ -151,6 +150,16 @@
       "to": [
         1,
         1
+      ]
+    },
+    {
+      "from": [
+        3,
+        5
+      ],
+      "to": [
+        4,
+        5
       ]
     }
   ]

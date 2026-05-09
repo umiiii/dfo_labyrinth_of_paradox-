@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getFloor, getIconDict } from '@/lib/labyrinth-loader';
+import { FLOOR_ROUTES } from '@/lib/labyrinth-routes';
 import TopBar from '@/components/TopBar';
 import BottomBar from '@/components/BottomBar';
 import LabyrinthBoard from '@/components/LabyrinthBoard';
@@ -9,19 +10,11 @@ interface Params {
   params: { level: string; no: string };
 }
 
-const FLOOR_ROUTES: Record<string, string> = {
-  '1/1': 'lab1_f1_11221',
-  '1/2': 'lab1_f1_12321',
-  '1/3': 'lab1_f1_13322',
-  '1/4': 'lab1_f1_22113',
-  '1/5': 'lab1_f1_23132',
-};
-
 export default async function LabyrinthPage({ params }: Params) {
   const level = Number(params.level);
   const no = Number(params.no);
 
-  if (![1, 2, 3].includes(level)) notFound();
+  if (![1, 2, 3, 4, 5, 6].includes(level)) notFound();
   if (!Number.isInteger(no) || no < 1) notFound();
 
   const floorId = FLOOR_ROUTES[`${level}/${no}`];

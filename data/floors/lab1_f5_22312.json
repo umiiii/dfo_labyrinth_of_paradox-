@@ -111,14 +111,8 @@
     {
       "row": 3,
       "col": 4,
-      "icon_id": "labyrinth_supply_base",
-      "tier": "ticket"
-    },
-    {
-      "row": 3,
-      "col": 5,
-      "icon_id": "labyrinth_supply_base",
-      "tier": "key"
+      "icon_id": "giant_armament_warehouse",
+      "tier": "primeval"
     },
     {
       "row": 4,
