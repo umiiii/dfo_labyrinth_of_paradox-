@@ -132,8 +132,7 @@ export default function RootLayout({
         <SpeedInsights />
         <Script
           id="google-adsense"
-          async
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6345227285458042"
           crossOrigin="anonymous"
         />
