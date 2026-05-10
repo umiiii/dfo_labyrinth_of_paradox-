@@ -48,17 +48,18 @@ export default function TopBar({ title, onBack }: TopBarProps) {
         </Link>
       )}
 
-      <div
-        className="title-text absolute"
+      <h1
+        className="title-text absolute m-0"
         style={{
           left: 140,
           top: '50%',
           transform: 'translateY(-50%)',
           fontSize: 38,
+          fontWeight: 600,
         }}
       >
         {title}
-      </div>
+      </h1>
     </div>
   );
 }

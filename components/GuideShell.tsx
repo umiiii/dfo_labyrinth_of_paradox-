@@ -1,6 +1,3 @@
-'use client';
-
-import { useState } from 'react';
 import Link from 'next/link';
 
 export interface GuideFloor {
@@ -22,11 +19,17 @@ export interface GuideArea {
 interface Props {
   sectionName: string;
   groups: GuideArea[];
+  selectedArea?: number;
 }
 
-export default function GuideShell({ sectionName, groups }: Props) {
-  const [selected, setSelected] = useState<number>(groups[0]?.number ?? 0);
-  const current = groups.find((g) => g.number === selected) ?? groups[0];
+export default function GuideShell({
+  sectionName,
+  groups,
+  selectedArea,
+}: Props) {
+  const current =
+    groups.find((g) => g.number === selectedArea) ?? groups[0];
+  const selected = current?.number ?? 0;
 
   return (
     <div className="wood-bg w-screen h-screen overflow-hidden flex items-center justify-center text-amber-100">
@@ -34,54 +37,57 @@ export default function GuideShell({ sectionName, groups }: Props) {
         className="flex flex-col md:flex-row overflow-hidden border border-amber-700/40 shadow-2xl md:rounded w-full h-full md:w-[max(800px,60vw)] md:h-[max(600px,60vh)]"
       >
         <aside className="w-full md:w-72 shrink-0 max-h-[55%] md:max-h-none md:h-full overflow-y-auto bg-stone-950/80 border-b md:border-b-0 md:border-r border-amber-900/40 flex flex-col">
-        <div className="px-4 pt-6 pb-4 text-4xl font-semibold text-amber-200 border-l-[3px] border-amber-500 ml-3">
+        <h1 className="px-4 pt-6 pb-4 text-4xl font-semibold text-amber-200 border-l-[3px] border-amber-500 ml-3 m-0">
           {sectionName}
-        </div>
+        </h1>
 
-        <ul className="flex-1 py-2 px-2 space-y-1">
-          {groups.map((g) => {
-            const isSelected = g.number === selected;
-            return (
-              <li key={g.number}>
-                <button
-                  type="button"
-                  onClick={() => setSelected(g.number)}
-                  className={`relative w-full flex items-center gap-3 px-3 py-2 rounded transition border ${
-                    isSelected
-                      ? 'border-amber-400 bg-stone-900 ring-1 ring-amber-400/60'
-                      : 'border-stone-800 bg-stone-900/40 hover:bg-stone-800/70 hover:border-stone-700'
-                  }`}
-                >
-                  <span
-                    className={`shrink-0 w-9 h-9 inline-flex items-center justify-center rounded border ${
+        <nav aria-label="区域导航" className="flex-1">
+          <ul className="py-2 px-2 space-y-1">
+            {groups.map((g) => {
+              const isSelected = g.number === selected;
+              return (
+                <li key={g.number}>
+                  <Link
+                    href={g.number === groups[0]?.number ? '/' : `/?area=${g.number}`}
+                    scroll={false}
+                    aria-current={isSelected ? 'page' : undefined}
+                    className={`relative w-full flex items-center gap-3 px-3 py-2 rounded transition border ${
                       isSelected
-                        ? 'border-amber-400 bg-stone-800 text-amber-300'
-                        : 'border-amber-700/40 bg-stone-800 text-amber-500/80'
+                        ? 'border-amber-400 bg-stone-900 ring-1 ring-amber-400/60'
+                        : 'border-stone-800 bg-stone-900/40 hover:bg-stone-800/70 hover:border-stone-700'
                     }`}
                   >
-                    <span className="text-base font-semibold">
-                      {romanize(g.number)}
+                    <span
+                      className={`shrink-0 w-9 h-9 inline-flex items-center justify-center rounded border ${
+                        isSelected
+                          ? 'border-amber-400 bg-stone-800 text-amber-300'
+                          : 'border-amber-700/40 bg-stone-800 text-amber-500/80'
+                      }`}
+                    >
+                      <span className="text-base font-semibold">
+                        {romanize(g.number)}
+                      </span>
                     </span>
-                  </span>
-                  <span
-                    className={`flex-1 text-left text-xl ${
-                      isSelected ? 'gold-text font-semibold' : 'text-amber-100'
-                    }`}
-                  >
-                    {g.label}
-                  </span>
-                  <span
-                    className={`text-xs ${
-                      isSelected ? 'text-amber-300' : 'text-stone-400'
-                    }`}
-                  >
-                    ({g.floors.length})
-                  </span>
-                </button>
-              </li>
-            );
-          })}
-        </ul>
+                    <span
+                      className={`flex-1 text-left text-xl ${
+                        isSelected ? 'gold-text font-semibold' : 'text-amber-100'
+                      }`}
+                    >
+                      {g.label}
+                    </span>
+                    <span
+                      className={`text-xs ${
+                        isSelected ? 'text-amber-300' : 'text-stone-400'
+                      }`}
+                    >
+                      ({g.floors.length})
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
 
         <div className="border-t border-stone-800 p-3 text-center text-xs text-stone-400">
           <a
@@ -98,9 +104,9 @@ export default function GuideShell({ sectionName, groups }: Props) {
       <section className="flex-1 min-h-0 h-full flex flex-col overflow-hidden">
         <header className="px-4 md:px-8 pt-4 md:pt-6 pb-4 border-b border-stone-800 bg-gradient-to-b from-stone-950/80 to-transparent">
           <div className="flex items-baseline gap-4">
-            <h1 className="title-text text-3xl">{current?.label ?? ''}</h1>
+            <h2 className="title-text text-3xl m-0">{current?.label ?? ''}</h2>
             <span className="text-xs text-stone-400 tracking-widest">
-              {sectionName} 
+              {sectionName}
             </span>
           </div>
           <p className="text-sm text-amber-300/80 mt-3 whitespace-pre-line">

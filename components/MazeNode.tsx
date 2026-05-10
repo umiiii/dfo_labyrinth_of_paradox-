@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import type {
@@ -43,18 +44,23 @@ export default function MazeNode({
       onMouseMove={(e) => setMouse({ x: e.clientX, y: e.clientY })}
       onMouseLeave={() => setHover(false)}
     >
-      <img
+      <Image
         src={resolved.fixed}
         alt={label}
+        fill
+        sizes="(max-width: 768px) 14vw, 114px"
         draggable={false}
-        className="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-150 group-hover:opacity-0"
+        className="object-contain select-none pointer-events-none transition-opacity duration-150 group-hover:opacity-0"
       />
-      <img
+      <Image
         src={resolved.hover}
         alt=""
         aria-hidden
+        fill
+        sizes="(max-width: 768px) 14vw, 114px"
         draggable={false}
-        className="absolute inset-0 w-full h-full object-contain select-none pointer-events-none opacity-0 transition-opacity duration-150 group-hover:opacity-100"
+        loading="lazy"
+        className="object-contain select-none pointer-events-none opacity-0 transition-opacity duration-150 group-hover:opacity-100"
       />
       {mounted && hover && iconDef &&
         createPortal(
@@ -191,11 +197,14 @@ function RewardCell({ reward }: { reward: RewardItem }) {
         boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.5)',
       }}
     >
-      <img
+      <Image
         src={reward.image}
         alt={reward.label ?? ''}
+        fill
+        sizes="52px"
         draggable={false}
-        className="absolute inset-0 w-full h-full object-contain p-0.5 select-none"
+        loading="lazy"
+        className="object-contain p-0.5 select-none"
       />
       {typeof reward.count === 'number' && (
         <div

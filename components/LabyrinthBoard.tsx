@@ -69,7 +69,7 @@ export default function LabyrinthBoard({
       ref={boardRef}
       className="relative w-full h-full overflow-hidden"
       style={{
-        backgroundImage: 'url(/resources/map.img/0.PNG)',
+        backgroundImage: 'url(/resources/map.img/0.webp)',
         backgroundSize: '100% 100%',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
