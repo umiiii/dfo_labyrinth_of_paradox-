@@ -34,7 +34,7 @@ export default function GuideShell({
   return (
     <div className="wood-bg w-screen h-screen overflow-hidden flex items-center justify-center text-amber-100">
       <main
-        className="flex flex-col md:flex-row overflow-hidden border border-amber-700/40 shadow-2xl md:rounded w-full h-full md:w-[max(800px,60vw)] md:h-[max(600px,60vh)]"
+        className="flex flex-col md:flex-row overflow-hidden border border-amber-700/40 shadow-2xl md:rounded w-full h-full md:w-[max(800px,70vw)] md:h-[max(600px,80vh)]"
       >
         <aside className="w-full md:w-72 shrink-0 max-h-[55%] md:max-h-none md:h-full overflow-y-auto bg-stone-950/80 border-b md:border-b-0 md:border-r border-amber-900/40 flex flex-col">
         <h1 className="px-4 pt-6 pb-4 text-4xl font-semibold text-amber-200 border-l-[3px] border-amber-500 ml-3 m-0">
