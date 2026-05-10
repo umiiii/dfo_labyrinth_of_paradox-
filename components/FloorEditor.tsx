@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent, useMemo, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import type {
   Floor,
   FloorEdge,
@@ -11,6 +11,7 @@ import type {
 } from '@/types/labyrinth';
 import { deriveEdges, resolveIcon } from '@/lib/floor-utils';
 import type { RewardOption } from '@/lib/labyrinth-loader';
+import PreviewDialog from './PreviewDialog';
 
 const ROWS = 5;
 const COLS = 7;
@@ -76,6 +77,20 @@ export default function FloorEditor({
   const [moveMode, setMoveMode] = useState(false);
   const [status, setStatus] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isLocal, setIsLocal] = useState(false);
+  const [serverList, setServerList] = useState<
+    { floor_id: string; name: string }[] | null
+  >(null);
+  const [serverPickerOpen, setServerPickerOpen] = useState(false);
+  const [loadingServerList, setLoadingServerList] = useState(false);
+  const [previewFloor, setPreviewFloor] = useState<Floor | null>(null);
+
+  useEffect(() => {
+    const h = window.location.hostname;
+    setIsLocal(
+      h === 'localhost' || h === '127.0.0.1' || h === '::1' || h === '[::1]',
+    );
+  }, []);
 
   const moveNode = (r: number, c: number, dr: number, dc: number) => {
     const nr = r + dr;
@@ -194,6 +209,15 @@ export default function FloorEditor({
     };
   };
 
+  const handlePreview = () => {
+    const { floor, errors } = buildFloor();
+    if (errors.length) {
+      setStatus(`预览中止：${errors.join('; ')}`);
+      return;
+    }
+    setPreviewFloor(floor);
+  };
+
   const handleExportImage = async () => {
     const { floor, errors } = buildFloor();
     if (errors.length) {
@@ -209,6 +233,10 @@ export default function FloorEditor({
       a.download = `${floor.floor_id}.png`;
       a.click();
       URL.revokeObjectURL(url);
+      if (!isLocal) {
+        setStatus(`已下载 ${floor.floor_id}.png（远程为只读，未上传服务器）`);
+        return;
+      }
       const form = new FormData();
       form.append('floor_id', floor.floor_id);
       form.append('image', blob, `${floor.floor_id}.png`);
@@ -238,6 +266,10 @@ export default function FloorEditor({
     a.download = `${floor.floor_id}.json`;
     a.click();
     URL.revokeObjectURL(url);
+    if (!isLocal) {
+      setStatus(`已下载 ${floor.floor_id}.json（远程为只读，未保存到服务器）`);
+      return;
+    }
     fetch('/api/editor-export/json', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -252,6 +284,60 @@ export default function FloorEditor({
       });
   };
 
+  const applyFloor = (data: Floor, sourceLabel: string) => {
+    const map: Record<NodeKey, FloorNode> = {};
+    data.nodes.forEach((n) => {
+      map[cellKey(n.row, n.col)] = n;
+    });
+    for (let r = 0; r < ROWS; r++) {
+      const k = cellKey(r, MID_COL);
+      if (!map[k]) {
+        map[k] = { row: r, col: MID_COL, icon_id: defaultMidColIcon(r) };
+      }
+    }
+    setNodes(map);
+    setFloorId(data.floor_id ?? 'untitled');
+    setName(data.name ?? '');
+    const nextEdges = new Set<string>();
+    (data.edges ?? []).forEach((e) => {
+      nextEdges.add(edgeKey(e.from[0], e.from[1], e.to[0], e.to[1]));
+    });
+    setExtraEdges(nextEdges);
+    setStatus(`已加载 ${sourceLabel}`);
+  };
+
+  const openServerPicker = async () => {
+    setServerPickerOpen((v) => !v);
+    if (serverList) return;
+    setLoadingServerList(true);
+    try {
+      const res = await fetch('/api/editor-export/list');
+      if (!res.ok) throw new Error(await res.text());
+      const data = (await res.json()) as {
+        floors: { floor_id: string; name: string }[];
+      };
+      setServerList(data.floors);
+    } catch (err) {
+      setStatus(`列表加载失败：${(err as Error).message}`);
+    } finally {
+      setLoadingServerList(false);
+    }
+  };
+
+  const handleLoadFromServer = async (id: string) => {
+    setServerPickerOpen(false);
+    try {
+      const res = await fetch(
+        `/api/editor-export/floor?floor_id=${encodeURIComponent(id)}`,
+      );
+      if (!res.ok) throw new Error(await res.text());
+      const data = (await res.json()) as Floor;
+      applyFloor(data, `${id}（服务器）`);
+    } catch (err) {
+      setStatus(`加载失败：${(err as Error).message}`);
+    }
+  };
+
   const handleLoadFile = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -259,25 +345,7 @@ export default function FloorEditor({
     reader.onload = () => {
       try {
         const data = JSON.parse(String(reader.result)) as Floor;
-        const map: Record<NodeKey, FloorNode> = {};
-        data.nodes.forEach((n) => {
-          map[cellKey(n.row, n.col)] = n;
-        });
-        for (let r = 0; r < ROWS; r++) {
-          const k = cellKey(r, MID_COL);
-          if (!map[k]) {
-            map[k] = { row: r, col: MID_COL, icon_id: defaultMidColIcon(r) };
-          }
-        }
-        setNodes(map);
-        setFloorId(data.floor_id ?? 'untitled');
-        setName(data.name ?? '');
-        const nextEdges = new Set<string>();
-        (data.edges ?? []).forEach((e) => {
-          nextEdges.add(edgeKey(e.from[0], e.from[1], e.to[0], e.to[1]));
-        });
-        setExtraEdges(nextEdges);
-        setStatus(`已加载 ${file.name}`);
+        applyFloor(data, file.name);
       } catch (err) {
         setStatus(`解析失败：${(err as Error).message}`);
       }
@@ -315,12 +383,47 @@ export default function FloorEditor({
             className="px-2 py-1 bg-stone-800 border border-amber-700 rounded text-amber-100"
           />
         </label>
+        <div className="relative">
+          <button
+            type="button"
+            onClick={openServerPicker}
+            className="px-3 py-1.5 bg-stone-800 border border-amber-700 rounded hover:bg-stone-700"
+          >
+            从服务器加载 ▾
+          </button>
+          {serverPickerOpen && (
+            <div className="absolute z-20 mt-1 left-0 min-w-[260px] max-h-72 overflow-y-auto bg-stone-900 border border-amber-700 rounded shadow-xl">
+              {loadingServerList && (
+                <div className="px-3 py-2 text-xs text-stone-400">
+                  加载中…
+                </div>
+              )}
+              {!loadingServerList && serverList && serverList.length === 0 && (
+                <div className="px-3 py-2 text-xs text-stone-400">
+                  服务器没有任何关卡
+                </div>
+              )}
+              {!loadingServerList &&
+                serverList?.map((f) => (
+                  <button
+                    key={f.floor_id}
+                    type="button"
+                    onClick={() => handleLoadFromServer(f.floor_id)}
+                    className="w-full text-left px-3 py-1.5 text-sm hover:bg-stone-800 border-b border-stone-800 last:border-b-0"
+                  >
+                    <div className="text-amber-200">{f.floor_id}</div>
+                    <div className="text-xs text-stone-400">{f.name}</div>
+                  </button>
+                ))}
+            </div>
+          )}
+        </div>
         <button
           type="button"
           onClick={() => fileInputRef.current?.click()}
           className="px-3 py-1.5 bg-stone-800 border border-amber-700 rounded hover:bg-stone-700"
         >
-          读取 JSON
+          读取本地 JSON
         </button>
         <input
           ref={fileInputRef}
@@ -335,6 +438,13 @@ export default function FloorEditor({
           className="px-3 py-1.5 bg-amber-700 border border-amber-500 rounded hover:bg-amber-600"
         >
           保存 JSON
+        </button>
+        <button
+          type="button"
+          onClick={handlePreview}
+          className="px-3 py-1.5 bg-amber-700 border border-amber-500 rounded hover:bg-amber-600"
+        >
+          预览
         </button>
         <button
           type="button"
@@ -577,6 +687,14 @@ export default function FloorEditor({
           )}
         </div>
       </div>
+
+      {previewFloor && (
+        <PreviewDialog
+          floor={previewFloor}
+          iconDict={iconDict}
+          onClose={() => setPreviewFloor(null)}
+        />
+      )}
     </div>
   );
 }

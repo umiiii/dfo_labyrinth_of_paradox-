@@ -2,6 +2,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { NextRequest, NextResponse } from 'next/server';
 import type { Floor } from '@/types/labyrinth';
+import { isLocalRequest } from '@/lib/server-auth';
 
 const ROOT = process.cwd();
 const OUT_DIR = path.join(ROOT, 'data', 'floors');
@@ -13,6 +14,11 @@ function safeFloorId(value: unknown): string | null {
 }
 
 export async function POST(req: NextRequest) {
+  if (!isLocalRequest(req)) {
+    return new NextResponse('server is read-only on non-local hosts', {
+      status: 403,
+    });
+  }
   const floor = (await req.json()) as Floor;
   const floorId = safeFloorId(floor.floor_id);
   if (!floorId) {

@@ -3,9 +3,19 @@ import Link from 'next/link';
 interface TopBarProps {
   level: number;
   title: string;
+  onBack?: () => void;
 }
 
-export default function TopBar({ title }: TopBarProps) {
+export default function TopBar({ title, onBack }: TopBarProps) {
+  const backStyle = {
+    left: 16,
+    top: '50%',
+    transform: 'translateY(-50%)',
+    fontSize: 14,
+  } as const;
+  const backClass =
+    'absolute flex items-center gap-1 text-amber-300 hover:text-amber-100 transition';
+
   return (
     <div
       className="relative w-full flex items-center"
@@ -17,21 +27,26 @@ export default function TopBar({ title }: TopBarProps) {
         boxShadow: '0 2px 8px rgba(0,0,0,0.6)',
       }}
     >
-      <Link
-        href="/"
-        className="absolute flex items-center gap-1 text-amber-300 hover:text-amber-100 transition"
-        style={{
-          left: 16,
-          top: '50%',
-          transform: 'translateY(-50%)',
-          fontSize: 14,
-        }}
-      >
-        <span aria-hidden style={{ fontSize: 18, lineHeight: 1 }}>
-          ←
-        </span>
-        <span>返回导航</span>
-      </Link>
+      {onBack ? (
+        <button
+          type="button"
+          onClick={onBack}
+          className={backClass}
+          style={backStyle}
+        >
+          <span aria-hidden style={{ fontSize: 18, lineHeight: 1 }}>
+            ←
+          </span>
+          <span>关闭预览</span>
+        </button>
+      ) : (
+        <Link href="/" className={backClass} style={backStyle}>
+          <span aria-hidden style={{ fontSize: 18, lineHeight: 1 }}>
+            ←
+          </span>
+          <span>返回导航</span>
+        </Link>
+      )}
 
       <div
         className="title-text absolute"

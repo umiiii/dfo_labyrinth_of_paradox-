@@ -107,7 +107,7 @@ function NodeTooltip({ name, description, rewards, x, y }: NodeTooltipProps) {
   return (
     <div
       ref={ref}
-      className="fixed z-[1000] pointer-events-none"
+      className="fixed z-[10000] pointer-events-none"
       style={{
         left: pos.left,
         top: pos.top,
