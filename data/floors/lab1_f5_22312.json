@@ -117,7 +117,7 @@
     {
       "row": 4,
       "col": 1,
-      "icon_id": "tuner_trace",
+      "icon_id": "tuner_left_trace",
       "tier": "legendary"
     },
     {
@@ -146,11 +146,21 @@
     {
       "from": [
         1,
-        5
+        4
       ],
       "to": [
         2,
-        5
+        4
+      ]
+    },
+    {
+      "from": [
+        3,
+        4
+      ],
+      "to": [
+        4,
+        4
       ]
     }
   ]
